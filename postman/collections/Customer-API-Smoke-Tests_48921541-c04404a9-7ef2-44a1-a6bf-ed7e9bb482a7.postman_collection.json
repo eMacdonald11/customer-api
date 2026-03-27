@@ -1,0 +1,1476 @@
+{
+  "info": {
+    "_postman_id": "c04404a9-7ef2-44a1-a6bf-ed7e9bb482a7",
+    "name": "Customer-API-Smoke-Tests",
+    "description": "Greenfield B2B Customer API (accounts and contacts). This OpenAPI document is the\ncanonical contract for local tooling (for example, syncing from a repository path).\n",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "health",
+      "item": [
+        {
+          "name": "Liveness probe",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "fdbb1092-f53e-4dfa-a8b2-c4d019f0f1a2",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "9746a197-bd80-4e6f-ac01-d22355f9d898",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c0797e40-fc8b-468b-8d26-54e6aef17093",
+              "name": "Service is running",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "text"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false,
+                  "description": ""
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"status\": \"ok\",\n  \"version\": \"0.1.0\"\n}"
+            },
+            {
+              "id": "07602d21-8ccc-4ca4-b8f0-dc56659b9b46",
+              "name": "Invalid request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "text"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false,
+                  "description": ""
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"bad_request\",\n  \"message\": \"request size must be less than 1mb\"\n}"
+            }
+          ]
+        }
+      ],
+      "id": "0527f0ef-474c-4a79-a5f9-89334489cdb0"
+    },
+    {
+      "name": "ready",
+      "item": [
+        {
+          "name": "Readiness probe",
+          "id": "b4aa704f-59c5-4635-9c7f-4353118fc0eb",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ready",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ready"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f6e8d179-d77f-4142-a7d6-78ce1ab31c5c",
+              "name": "Service is ready to accept traffic",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "text"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ready",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ready"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false,
+                  "description": ""
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"status\": \"ok\"\n}"
+            },
+            {
+              "id": "11661e73-4c79-4fc7-82a9-ef2af3b349ea",
+              "name": "Invalid request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "text"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ready",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ready"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false,
+                  "description": ""
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"bad_request\",\n  \"message\": \"malformed query string\"\n}"
+            }
+          ]
+        }
+      ],
+      "id": "14a66f18-681f-4e2b-8c95-bca3b3bc2dc8"
+    },
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "customers",
+          "item": [
+            {
+              "name": "{customerId}",
+              "item": [
+                {
+                  "name": "contacts",
+                  "item": [
+                    {
+                      "name": "List contacts for a customer",
+                      "id": "274812a8-0397-48ca-b7c4-3ed0a505dfe1",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "",
+                          "options": {
+                            "raw": {
+                              "language": "text"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/customers/:customerId/contacts",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "customers",
+                            ":customerId",
+                            "contacts"
+                          ],
+                          "variable": [
+                            {
+                              "id": "f7a9fa59-c080-4894-9338-3a80f3bc75b4",
+                              "key": "customerId",
+                              "value": "550e8400-e29b-41d4-a716-446655440001"
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "5c3417bc-0ee8-4c4c-96ee-c22bfdab79b0",
+                          "name": "List of contacts",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "",
+                              "options": {
+                                "raw": {
+                                  "language": "text"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/customers/:customerId/contacts",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "customers",
+                                ":customerId",
+                                "contacts"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "customerId",
+                                  "value": "550e8400-e29b-41d4-a716-446655440001"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json",
+                              "disabled": false,
+                              "description": ""
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"data\": [\n    {\n      \"id\": \"660e8400-e29b-41d4-a716-446655440101\",\n      \"customerId\": \"550e8400-e29b-41d4-a716-446655440001\",\n      \"name\": \"Alex Morgan\",\n      \"email\": \"alex.morgan@example.com\",\n      \"role\": \"Account Director\",\n      \"createdAt\": \"2025-02-01T08:00:00.000Z\"\n    },\n    {\n      \"id\": \"660e8400-e29b-41d4-a716-446655440102\",\n      \"customerId\": \"550e8400-e29b-41d4-a716-446655440001\",\n      \"name\": \"Jamie Lee\",\n      \"email\": \"jamie.lee@example.com\",\n      \"role\": \"Billing\",\n      \"createdAt\": \"2025-02-10T12:15:00.000Z\"\n    }\n  ]\n}"
+                        },
+                        {
+                          "id": "2a441f33-d117-4e5a-8ce9-7643051bb9a8",
+                          "name": "Invalid customer ID",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "",
+                              "options": {
+                                "raw": {
+                                  "language": "text"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/customers/:customerId/contacts",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "customers",
+                                ":customerId",
+                                "contacts"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "customerId",
+                                  "value": "550e8400-e29b-41d4-a716-446655440001"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json",
+                              "disabled": false,
+                              "description": ""
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": \"bad_request\",\n  \"message\": \"path/customerId must match format \\\"uuid\\\"\"\n}"
+                        },
+                        {
+                          "id": "cf83eadb-beaf-4649-9916-d497ef72f25d",
+                          "name": "Customer not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "",
+                              "options": {
+                                "raw": {
+                                  "language": "text"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/customers/:customerId/contacts",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "customers",
+                                ":customerId",
+                                "contacts"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "customerId",
+                                  "value": "550e8400-e29b-41d4-a716-446655440001"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json",
+                              "disabled": false,
+                              "description": ""
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Customer not found\"\n}"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Add a contact to a customer",
+                      "id": "4506b61b-4fa1-46aa-bd3c-d8b9d0194434",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/customers/:customerId/contacts",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "customers",
+                            ":customerId",
+                            "contacts"
+                          ],
+                          "variable": [
+                            {
+                              "id": "cf0de061-c8ca-4df4-98c3-8b03e76c11e5",
+                              "key": "customerId",
+                              "value": "550e8400-e29b-41d4-a716-446655440001"
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "596a50d7-e062-451d-87a0-098cb27a59c4",
+                          "name": "Contact created",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"Taylor Reed\",\n  \"email\": \"taylor.reed@example.com\"\n}",
+                              "options": {
+                                "raw": {
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/customers/:customerId/contacts",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "customers",
+                                ":customerId",
+                                "contacts"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "customerId",
+                                  "value": "550e8400-e29b-41d4-a716-446655440001"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json",
+                              "disabled": false,
+                              "description": ""
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"660e8400-e29b-41d4-a716-446655440201\",\n  \"customerId\": \"550e8400-e29b-41d4-a716-446655440001\",\n  \"name\": \"Taylor Reed\",\n  \"email\": \"taylor.reed@example.com\",\n  \"role\": null,\n  \"createdAt\": \"2025-03-26T17:00:00.000Z\"\n}"
+                        },
+                        {
+                          "id": "f05b68e6-11a6-447b-aa48-71e127535b71",
+                          "name": "Invalid request body or customer ID",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"Taylor Reed\",\n  \"email\": \"taylor.reed@example.com\"\n}",
+                              "options": {
+                                "raw": {
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/customers/:customerId/contacts",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "customers",
+                                ":customerId",
+                                "contacts"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "customerId",
+                                  "value": "550e8400-e29b-41d4-a716-446655440001"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json",
+                              "disabled": false,
+                              "description": ""
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": \"bad_request\",\n  \"message\": \"request/body/email must match format \\\"email\\\"\"\n}"
+                        },
+                        {
+                          "id": "1724502a-f8f0-41d9-a887-e9710167e126",
+                          "name": "Customer not found",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"Taylor Reed\",\n  \"email\": \"taylor.reed@example.com\"\n}",
+                              "options": {
+                                "raw": {
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/customers/:customerId/contacts",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "customers",
+                                ":customerId",
+                                "contacts"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "customerId",
+                                  "value": "550e8400-e29b-41d4-a716-446655440001"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json",
+                              "disabled": false,
+                              "description": ""
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Customer not found\"\n}"
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "3f7a25a2-9620-4ed1-813f-76f2dd51b35e"
+                },
+                {
+                  "name": "Get a customer by ID",
+                  "id": "fc30519d-3c39-40c3-b268-d892b7497512",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "",
+                      "options": {
+                        "raw": {
+                          "language": "text"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/customers/:customerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "customers",
+                        ":customerId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "146a1034-918d-4243-9516-fa781acd5e00",
+                          "key": "customerId",
+                          "value": "550e8400-e29b-41d4-a716-446655440001"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "0b3502be-e9ac-4114-a9fd-4a14ebc2dc04",
+                      "name": "Customer found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "",
+                          "options": {
+                            "raw": {
+                              "language": "text"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/customers/:customerId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "customers",
+                            ":customerId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "customerId",
+                              "value": "550e8400-e29b-41d4-a716-446655440001"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json",
+                          "disabled": false,
+                          "description": ""
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n  \"name\": \"Northwind Trading Co.\",\n  \"industry\": \"Wholesale\",\n  \"region\": \"EMEA\",\n  \"status\": \"active\",\n  \"externalRef\": \"CRM-ACC-90012\",\n  \"createdAt\": \"2025-01-15T09:30:00.000Z\",\n  \"updatedAt\": \"2025-03-01T14:22:11.000Z\"\n}"
+                    },
+                    {
+                      "id": "766dfa5f-99cc-499e-a31c-65d3bd3e9053",
+                      "name": "Invalid customer ID",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "",
+                          "options": {
+                            "raw": {
+                              "language": "text"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/customers/:customerId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "customers",
+                            ":customerId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "customerId",
+                              "value": "550e8400-e29b-41d4-a716-446655440001"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json",
+                          "disabled": false,
+                          "description": ""
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"bad_request\",\n  \"message\": \"path/customerId must match format \\\"uuid\\\"\"\n}"
+                    },
+                    {
+                      "id": "13834cc8-855f-49fb-8b06-7edcf9645d97",
+                      "name": "Customer not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "",
+                          "options": {
+                            "raw": {
+                              "language": "text"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/customers/:customerId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "customers",
+                            ":customerId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "customerId",
+                              "value": "550e8400-e29b-41d4-a716-446655440001"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json",
+                          "disabled": false,
+                          "description": ""
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Customer not found\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Update a customer",
+                  "id": "539a6fbb-20cc-487c-bad7-9730147d3c90",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/customers/:customerId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "customers",
+                        ":customerId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "bd16b095-0c0e-4c86-a501-fa7675f58b02",
+                          "key": "customerId",
+                          "value": "550e8400-e29b-41d4-a716-446655440001"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "422607db-ac5e-4d8e-8cc4-af41b3a81513",
+                      "name": "Customer updated",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"status\": \"active\"\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/customers/:customerId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "customers",
+                            ":customerId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "customerId",
+                              "value": "550e8400-e29b-41d4-a716-446655440001"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json",
+                          "disabled": false,
+                          "description": ""
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n  \"name\": \"Northwind Trading Co.\",\n  \"industry\": null,\n  \"region\": \"Global\",\n  \"status\": \"active\",\n  \"externalRef\": \"CRM-ACC-90012\",\n  \"createdAt\": \"2025-01-15T09:30:00.000Z\",\n  \"updatedAt\": \"2025-03-26T16:45:00.000Z\"\n}"
+                    },
+                    {
+                      "id": "6dde611b-6570-4f88-87fe-78985d0abc4b",
+                      "name": "Invalid request body or customer ID",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"status\": \"active\"\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/customers/:customerId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "customers",
+                            ":customerId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "customerId",
+                              "value": "550e8400-e29b-41d4-a716-446655440001"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json",
+                          "disabled": false,
+                          "description": ""
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"bad_request\",\n  \"message\": \"request/body must NOT have fewer than 1 properties\"\n}"
+                    },
+                    {
+                      "id": "5bd7ad0e-8f16-4e39-acf9-ae15867f8326",
+                      "name": "Customer not found",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"status\": \"active\"\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/customers/:customerId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "customers",
+                            ":customerId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "customerId",
+                              "value": "550e8400-e29b-41d4-a716-446655440001"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json",
+                          "disabled": false,
+                          "description": ""
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Customer not found\"\n}"
+                    }
+                  ]
+                }
+              ],
+              "id": "2694c00b-c49c-481c-8bbb-23a4b393f7e8"
+            },
+            {
+              "name": "List customers",
+              "id": "07c08cc4-13f0-42ea-b129-6b22e5505367",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "text"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/customers?limit=20&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "customers"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "a780f243-b98f-4304-8fbb-d08e36e27d0c",
+                  "name": "Paginated list of customers",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "",
+                      "options": {
+                        "raw": {
+                          "language": "text"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/customers?limit=20&offset=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "customers"
+                      ],
+                      "query": [
+                        {
+                          "key": "limit",
+                          "value": "20"
+                        },
+                        {
+                          "key": "offset",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json",
+                      "disabled": false,
+                      "description": ""
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n      \"name\": \"Northwind Trading Co.\",\n      \"industry\": \"Wholesale\",\n      \"region\": \"EMEA\",\n      \"status\": \"active\",\n      \"externalRef\": \"CRM-ACC-90012\",\n      \"createdAt\": \"2025-01-15T09:30:00.000Z\",\n      \"updatedAt\": \"2025-03-01T14:22:11.000Z\"\n    },\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440002\",\n      \"name\": \"Contoso Materials Ltd\",\n      \"industry\": \"Manufacturing\",\n      \"region\": \"APAC\",\n      \"status\": \"pending_review\",\n      \"externalRef\": null,\n      \"createdAt\": \"2025-02-20T11:05:00.000Z\",\n      \"updatedAt\": \"2025-02-20T11:05:00.000Z\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 47,\n    \"limit\": 20,\n    \"offset\": 0\n  }\n}"
+                },
+                {
+                  "id": "3a590a6a-c983-41f5-923f-c8a8a4ce43df",
+                  "name": "Invalid query parameters",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "",
+                      "options": {
+                        "raw": {
+                          "language": "text"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/customers?limit=20&offset=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "customers"
+                      ],
+                      "query": [
+                        {
+                          "key": "limit",
+                          "value": "20"
+                        },
+                        {
+                          "key": "offset",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json",
+                      "disabled": false,
+                      "description": ""
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"bad_request\",\n  \"message\": \"limit must be a number between 1 and 100\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Create a customer",
+              "id": "243bbb06-9f60-4df0-9702-8a1ea0f2603e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/customers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "customers"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "d1f91896-6906-49c8-8d9b-206be3dbd61c",
+                  "name": "Customer created",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Fabrikam Industries\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/customers",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "customers"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json",
+                      "disabled": false,
+                      "description": ""
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"6ba7b810-9dad-11d1-80b4-00c04fd430c8\",\n  \"name\": \"Fabrikam Industries\",\n  \"industry\": null,\n  \"region\": null,\n  \"status\": \"draft\",\n  \"externalRef\": null,\n  \"createdAt\": \"2025-03-26T10:00:00.000Z\",\n  \"updatedAt\": \"2025-03-26T10:00:00.000Z\"\n}"
+                },
+                {
+                  "id": "fb19033f-99f6-4d9f-8bbd-776b34a71a26",
+                  "name": "Invalid request body",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Fabrikam Industries\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/customers",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "customers"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json",
+                      "disabled": false,
+                      "description": ""
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"bad_request\",\n  \"message\": \"request/body must have required property 'name'\"\n}"
+                }
+              ]
+            }
+          ],
+          "id": "5ca2450a-6ba6-4f8d-9750-fd82cadcb459"
+        }
+      ],
+      "id": "21a878ac-0116-4814-b91c-92e399a6b806"
+    }
+  ],
+  "variable": [
+    {
+      "id": "9e0438e7-179d-44e8-9008-9c100bc50103",
+      "key": "baseUrl"
+    }
+  ]
+}
