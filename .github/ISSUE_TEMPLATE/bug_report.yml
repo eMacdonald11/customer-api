@@ -1,0 +1,23 @@
+name: Bug report
+description: Report incorrect behavior or a regression
+labels: ["bug"]
+body:
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Include commands, requests, and versions where helpful.
+    validations:
+      required: true

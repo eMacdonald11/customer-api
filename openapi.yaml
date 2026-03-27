@@ -1,0 +1,661 @@
+openapi: 3.0.3
+info:
+  title: Customer API
+  description: |
+    Greenfield B2B Customer API (accounts and contacts). This OpenAPI document is the
+    canonical contract for local tooling (for example, syncing from a repository path).
+  version: 0.1.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: /
+    description: API base path (configure host and port in your environment)
+security: []
+tags:
+  - name: Health
+    description: Process health endpoints for orchestration and probes
+  - name: Customers
+    description: B2B customer accounts
+  - name: Contacts
+    description: People associated with a customer account
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Liveness probe
+      operationId: getHealth
+      responses:
+        "200":
+          description: Service is running
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+              examples:
+                default:
+                  summary: Typical liveness payload
+                  value:
+                    status: ok
+                    version: "0.1.0"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: bad_request
+                message: "request size must be less than 1mb"
+
+  /ready:
+    get:
+      tags: [Health]
+      summary: Readiness probe
+      operationId: getReady
+      responses:
+        "200":
+          description: Service is ready to accept traffic
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReadyResponse"
+              example:
+                status: ok
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: bad_request
+                message: "malformed query string"
+
+  /v1/customers:
+    get:
+      tags: [Customers]
+      summary: List customers
+      operationId: listCustomers
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          example: 20
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          example: 0
+      responses:
+        "200":
+          description: Paginated list of customers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerListResponse"
+              examples:
+                first_page:
+                  summary: First page with two accounts
+                  value:
+                    data:
+                      - id: 550e8400-e29b-41d4-a716-446655440001
+                        name: Northwind Trading Co.
+                        industry: Wholesale
+                        region: EMEA
+                        status: active
+                        externalRef: CRM-ACC-90012
+                        createdAt: "2025-01-15T09:30:00.000Z"
+                        updatedAt: "2025-03-01T14:22:11.000Z"
+                      - id: 550e8400-e29b-41d4-a716-446655440002
+                        name: Contoso Materials Ltd
+                        industry: Manufacturing
+                        region: APAC
+                        status: pending_review
+                        externalRef: null
+                        createdAt: "2025-02-20T11:05:00.000Z"
+                        updatedAt: "2025-02-20T11:05:00.000Z"
+                    meta:
+                      total: 47
+                      limit: 20
+                      offset: 0
+                empty_result:
+                  summary: No customers match filters (hypothetical future filters)
+                  value:
+                    data: []
+                    meta:
+                      total: 0
+                      limit: 20
+                      offset: 0
+        "400":
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: bad_request
+                message: "limit must be a number between 1 and 100"
+
+    post:
+      tags: [Customers]
+      summary: Create a customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerCreateRequest"
+            examples:
+              minimal:
+                summary: Name only (defaults apply server-side)
+                value:
+                  name: Fabrikam Industries
+              full:
+                summary: All optional fields populated
+                value:
+                  name: Adventure Works
+                  industry: Retail
+                  region: Americas
+                  status: draft
+                  externalRef: SAP-CUST-44102
+      responses:
+        "201":
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+              example:
+                id: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+                name: Fabrikam Industries
+                industry: null
+                region: null
+                status: draft
+                externalRef: null
+                createdAt: "2025-03-26T10:00:00.000Z"
+                updatedAt: "2025-03-26T10:00:00.000Z"
+        "400":
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: bad_request
+                message: "request/body must have required property 'name'"
+
+  /v1/customers/{customerId}:
+    get:
+      tags: [Customers]
+      summary: Get a customer by ID
+      operationId: getCustomer
+      parameters:
+        - $ref: "#/components/parameters/CustomerId"
+      responses:
+        "200":
+          description: Customer found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+              example:
+                id: 550e8400-e29b-41d4-a716-446655440001
+                name: Northwind Trading Co.
+                industry: Wholesale
+                region: EMEA
+                status: active
+                externalRef: CRM-ACC-90012
+                createdAt: "2025-01-15T09:30:00.000Z"
+                updatedAt: "2025-03-01T14:22:11.000Z"
+        "400":
+          description: Invalid customer ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: bad_request
+                message: 'path/customerId must match format "uuid"'
+        "404":
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: not_found
+                message: Customer not found
+
+    patch:
+      tags: [Customers]
+      summary: Update a customer
+      operationId: updateCustomer
+      parameters:
+        - $ref: "#/components/parameters/CustomerId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerUpdateRequest"
+            examples:
+              activate:
+                summary: Promote from draft to active
+                value:
+                  status: active
+              contact_fields:
+                summary: Update region and clear industry
+                value:
+                  region: Global
+                  industry: null
+      responses:
+        "200":
+          description: Customer updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+              example:
+                id: 550e8400-e29b-41d4-a716-446655440001
+                name: Northwind Trading Co.
+                industry: null
+                region: Global
+                status: active
+                externalRef: CRM-ACC-90012
+                createdAt: "2025-01-15T09:30:00.000Z"
+                updatedAt: "2025-03-26T16:45:00.000Z"
+        "400":
+          description: Invalid request body or customer ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: bad_request
+                message: "request/body must NOT have fewer than 1 properties"
+        "404":
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: not_found
+                message: Customer not found
+
+  /v1/customers/{customerId}/contacts:
+    get:
+      tags: [Contacts]
+      summary: List contacts for a customer
+      operationId: listContacts
+      parameters:
+        - $ref: "#/components/parameters/CustomerId"
+      responses:
+        "200":
+          description: List of contacts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactListResponse"
+              examples:
+                with_contacts:
+                  summary: Primary and billing contacts
+                  value:
+                    data:
+                      - id: 660e8400-e29b-41d4-a716-446655440101
+                        customerId: 550e8400-e29b-41d4-a716-446655440001
+                        name: Alex Morgan
+                        email: alex.morgan@example.com
+                        role: Account Director
+                        createdAt: "2025-02-01T08:00:00.000Z"
+                      - id: 660e8400-e29b-41d4-a716-446655440102
+                        customerId: 550e8400-e29b-41d4-a716-446655440001
+                        name: Jamie Lee
+                        email: jamie.lee@example.com
+                        role: Billing
+                        createdAt: "2025-02-10T12:15:00.000Z"
+                none_yet:
+                  summary: Valid customer with no contacts
+                  value:
+                    data: []
+        "400":
+          description: Invalid customer ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: bad_request
+                message: 'path/customerId must match format "uuid"'
+        "404":
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: not_found
+                message: Customer not found
+
+    post:
+      tags: [Contacts]
+      summary: Add a contact to a customer
+      operationId: createContact
+      parameters:
+        - $ref: "#/components/parameters/CustomerId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactCreateRequest"
+            examples:
+              required_only:
+                summary: Name and email
+                value:
+                  name: Taylor Reed
+                  email: taylor.reed@example.com
+              with_role:
+                summary: Include job function
+                value:
+                  name: Morgan Chen
+                  email: morgan.chen@example.com
+                  role: Procurement Lead
+      responses:
+        "201":
+          description: Contact created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contact"
+              example:
+                id: 660e8400-e29b-41d4-a716-446655440201
+                customerId: 550e8400-e29b-41d4-a716-446655440001
+                name: Taylor Reed
+                email: taylor.reed@example.com
+                role: null
+                createdAt: "2025-03-26T17:00:00.000Z"
+        "400":
+          description: Invalid request body or customer ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: bad_request
+                message: 'request/body/email must match format "email"'
+        "404":
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: not_found
+                message: Customer not found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Placeholder for future authorization. This template does not validate tokens.
+
+  parameters:
+    CustomerId:
+      name: customerId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      example: 550e8400-e29b-41d4-a716-446655440001
+
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status, version]
+      properties:
+        status:
+          type: string
+          enum: [ok]
+        version:
+          type: string
+      example:
+        status: ok
+        version: "0.1.0"
+
+    ReadyResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [ok]
+      example:
+        status: ok
+
+    CustomerStatus:
+      type: string
+      enum: [draft, pending_review, active]
+      example: active
+
+    Customer:
+      type: object
+      required: [id, name, status, createdAt, updatedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        industry:
+          type: string
+          maxLength: 120
+          nullable: true
+        region:
+          type: string
+          maxLength: 120
+          nullable: true
+        status:
+          $ref: "#/components/schemas/CustomerStatus"
+        externalRef:
+          type: string
+          maxLength: 200
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      example:
+        id: 550e8400-e29b-41d4-a716-446655440001
+        name: Northwind Trading Co.
+        industry: Wholesale
+        region: EMEA
+        status: active
+        externalRef: CRM-ACC-90012
+        createdAt: "2025-01-15T09:30:00.000Z"
+        updatedAt: "2025-03-01T14:22:11.000Z"
+
+    CustomerCreateRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        industry:
+          type: string
+          maxLength: 120
+        region:
+          type: string
+          maxLength: 120
+        status:
+          $ref: "#/components/schemas/CustomerStatus"
+        externalRef:
+          type: string
+          maxLength: 200
+      example:
+        name: Fabrikam Industries
+        industry: Logistics
+        region: EU-West
+        status: draft
+        externalRef: ERP-77821
+
+    CustomerUpdateRequest:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        industry:
+          type: string
+          maxLength: 120
+          nullable: true
+        region:
+          type: string
+          maxLength: 120
+          nullable: true
+        status:
+          $ref: "#/components/schemas/CustomerStatus"
+        externalRef:
+          type: string
+          maxLength: 200
+          nullable: true
+      example:
+        status: active
+        region: Global
+
+    CustomerListResponse:
+      type: object
+      required: [data, meta]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Customer"
+        meta:
+          type: object
+          required: [total, limit, offset]
+          properties:
+            total:
+              type: integer
+              minimum: 0
+            limit:
+              type: integer
+              minimum: 1
+            offset:
+              type: integer
+              minimum: 0
+      example:
+        data:
+          - id: 550e8400-e29b-41d4-a716-446655440001
+            name: Northwind Trading Co.
+            industry: Wholesale
+            region: EMEA
+            status: active
+            externalRef: CRM-ACC-90012
+            createdAt: "2025-01-15T09:30:00.000Z"
+            updatedAt: "2025-03-01T14:22:11.000Z"
+        meta:
+          total: 47
+          limit: 20
+          offset: 0
+
+    Contact:
+      type: object
+      required: [id, customerId, name, email, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        customerId:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          maxLength: 120
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+      example:
+        id: 660e8400-e29b-41d4-a716-446655440101
+        customerId: 550e8400-e29b-41d4-a716-446655440001
+        name: Alex Morgan
+        email: alex.morgan@example.com
+        role: Account Director
+        createdAt: "2025-02-01T08:00:00.000Z"
+
+    ContactCreateRequest:
+      type: object
+      required: [name, email]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          maxLength: 120
+      example:
+        name: Morgan Chen
+        email: morgan.chen@example.com
+        role: Procurement Lead
+
+    ContactListResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Contact"
+      example:
+        data:
+          - id: 660e8400-e29b-41d4-a716-446655440101
+            customerId: 550e8400-e29b-41d4-a716-446655440001
+            name: Alex Morgan
+            email: alex.morgan@example.com
+            role: Account Director
+            createdAt: "2025-02-01T08:00:00.000Z"
+
+    ErrorResponse:
+      type: object
+      required: [error, message]
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      example:
+        error: not_found
+        message: Customer not found
