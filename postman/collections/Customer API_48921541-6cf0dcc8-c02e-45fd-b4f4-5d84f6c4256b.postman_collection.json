@@ -1,0 +1,270 @@
+{
+  "info": {
+    "_postman_id": "6cf0dcc8-c02e-45fd-b4f4-5d84f6c4256b",
+    "name": "Customer API",
+    "description": "Greenfield B2B Customer API for managing customer accounts and contacts.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Contacts",
+      "item": [
+        {
+          "name": "List Contacts",
+          "id": "45ae64a1-f39b-4777-a9fc-616fe447920d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/customers/{{customerId}}/contacts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "customers",
+                "{{customerId}}",
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Contact",
+          "id": "4a16b72f-1a90-4c66-9c18-a02b1745afcc",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/customers/{{customerId}}/contacts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "customers",
+                "{{customerId}}",
+                "contacts"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "1d05d94e-d1d6-4ff6-ad01-d06104cd6a63"
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "List Customers",
+          "id": "dcb54ed5-f801-46fd-8c90-2f9b65eff042",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/customers?limit=20&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "customers"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Customer",
+          "id": "fdd72f25-7cc2-45a6-9e08-8e6fa4132df4",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/customers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Customer",
+          "id": "47c8e681-94c3-4370-9bff-bafc8f96ae0e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/customers/{{customerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "customers",
+                "{{customerId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Customer",
+          "id": "e65fa824-01cd-4d41-97a5-5b825bee669c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/customers/{{customerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "customers",
+                "{{customerId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "d43bd63d-d977-4487-b57a-c999bf295ea6"
+    },
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Get Health",
+          "id": "75f2b8f3-0588-47f7-bb67-1c14b9cff15f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Readiness",
+          "id": "99db12a1-48bf-4128-934b-01b1b5f22536",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ready",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ready"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "6736d2e9-09ff-411e-b435-6c7c8f358e3b"
+    }
+  ],
+  "variable": [
+    {
+      "id": "c82e804a-c44c-4326-a310-a013b29e324f",
+      "key": "baseUrl"
+    },
+    {
+      "id": "69a4b959-d094-41ed-9d92-66526d443b8f",
+      "key": "customerId"
+    }
+  ]
+}
